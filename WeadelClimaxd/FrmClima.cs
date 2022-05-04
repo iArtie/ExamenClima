@@ -23,8 +23,8 @@ namespace WeadelClimaxd
         public WeatherMain.ForeCastInfo wfc2;
         public OpenWeatherClient opw;
         public double x, y;
-        
-        string owajson;
+        public static string filename = "laweaclima.json", filename2 = "Current.json";
+        string owajson, owajson2;
         long dt;
         //long dt = DateTimeOffset.Now.ToUnixTimeSeconds();
         public FrmClima()
@@ -37,8 +37,11 @@ namespace WeadelClimaxd
             InitializeComponent();
 
         }
-     
-       
+        public Stream DataStream
+        {
+            get => File.Open($"{filename}.json", FileMode.OpenOrCreate, FileAccess.ReadWrite);
+        }
+
         string APIKey = "498e4fc3fddeb027b3363fcfc0b77921";
         private void BtnBuscar_Click(object sender, EventArgs e)
         {
@@ -52,7 +55,19 @@ namespace WeadelClimaxd
                 getWeather();
                 flpContent.Show();
                 txtClima.Text = String.Empty;
-                string filename = "laweaclima.json";
+                //using (FileStream fileStream = new FileStream(filename, FileMode.Append, FileAccess.Write))
+                //{
+                //    binaryWriter = new BinaryWriter(fileStream);
+                //    binaryWriter.Write(id);
+                //    binaryWriter.Write(t.Nombre);
+                //    binaryWriter.Write(t.Valor);
+                //    binaryWriter.Write(t.VidaUtil);
+                //    binaryWriter.Write(t.ValorResidual);
+                //    binaryWriter.Write(t.Descripcion);
+                //    binaryWriter.Write(t.Codigo);
+                //    binaryWriter.Write(t.Estado);
+
+                //}
                 //File.WriteAllText
                 //using (FileStream fs = File.Create(filename))
                 //{
@@ -61,7 +76,7 @@ namespace WeadelClimaxd
                 //    //fs.Write(info, 0, info.Length);
                 //}
                 //System.IO.FileStream Create(string filename);
-              
+
             }
             catch
             {
@@ -78,8 +93,61 @@ namespace WeadelClimaxd
                 
             }
         }
-     
 
+        public static string GetClimaJsonFromFile()
+        {
+            string climaJsonFromFile;
+            using (var reader = new StreamReader(filename))
+                climaJsonFromFile = reader.ReadToEnd();
+            return climaJsonFromFile;
+        }
+        public static string GetClimaJsonFromFile2()
+        {
+            string climaJsonFromFile;
+            using (var reader = new StreamReader(filename2))
+                climaJsonFromFile = reader.ReadToEnd();
+            return climaJsonFromFile;
+        }
+        public void getWeatherFromJson()
+        {
+            root Info = JsonConvert.DeserializeObject<root>(GetClimaJsonFromFile2());
+            string sunset = ConvertDateTime(Info.sys.sunset).ToShortTimeString();
+            string sunrise = ConvertDateTime(Info.sys.sunrise).ToShortTimeString();
+            double temp = Info.main.temp;
+            double unu = temp - 273.15;
+            unu = (int)unu;
+            picWeather.ImageLocation = "https://openweathermap.org/img/w/" + Info.weather[0].icon + ".png";
+            labelCd.Text = Info.weather[0].main;
+            laberDt.Text = Info.weather[0].description;
+            labelSun.Text = sunset.ToString();
+            labelSn.Text = sunrise.ToString();
+            labelWn.Text = Info.wind.speed.ToString();
+            labelPress.Text = Info.main.pressure.ToString();
+            labelTemp.Text = unu.ToString() + "°";
+            x = Info.coord.lat;
+            y = Info.coord.lon;
+            dt = Info.dt;
+            WeatherMain.ForeCastInfo wJson = JsonConvert.DeserializeObject<WeatherMain.ForeCastInfo>(GetClimaJsonFromFile());
+            InfoDetail mini;
+            for (int i = 0; i < 9; i++)
+            {
+                double tempxd;
+                int tempint;
+                string hoursstring;
+                tempxd = wJson.hourly[i].temp - 273.15;
+                hoursstring = ConvertDateTime(wJson.hourly[i].dt).ToShortTimeString();
+                tempint = (int)tempxd;
+                mini = new InfoDetail();
+                mini.lblHours.Text = hoursstring;
+                mini.lblCondi.Text = wJson.hourly[i].weather[0].main;
+                mini.lblDetails.Text = wJson.hourly[i].weather[0].description;
+                mini.lblWin.Text = wJson.hourly[i].wind_speed.ToString();
+                mini.lblPress.Text = wJson.hourly[i].pressure.ToString();
+                mini.lblTemp.Text = tempint.ToString() + "°";
+                mini.picWeather.ImageLocation = $"{AppSettings.ApiIcon}" + wJson.hourly[i].weather[0].icon + ".png";
+                flpContent.Controls.Add(mini);
+            }
+        }
         public class WindowExtension
         {
             [DllImport("user32.DLL", EntryPoint = "ReleaseCapture")]
@@ -117,13 +185,14 @@ namespace WeadelClimaxd
                     x = Info.coord.lat;
                     y = Info.coord.lon;
                     dt = Info.dt;
-                    owajson = JsonConvert.SerializeObject(Info);
-                    StreamWriter guardado = new StreamWriter();
-                    foreach (object linea in owajson)
-                    {
-                        guardado.WriteLine(linea);
-                    }
-                    guardado.Close();
+                    owajson2 = JsonConvert.SerializeObject(Info,Formatting.Indented);
+                    File.WriteAllText(filename2, owajson2);
+                    //StreamWriter guardado = new StreamWriter();
+                    //foreach (object linea in owajson)
+                    //{
+                    //    guardado.WriteLine(linea);
+                    //}
+                    //guardado.Close();
                 }
                 
                 Task.Run(Request).Wait();
@@ -146,7 +215,8 @@ namespace WeadelClimaxd
                     mini.picWeather.ImageLocation = $"{AppSettings.ApiIcon}" + wfc2.hourly[i].weather[0].icon + ".png";
                     flpContent.Controls.Add(mini);
                 }
-                owajson = JsonConvert.SerializeObject(wfc2);
+                owajson = JsonConvert.SerializeObject(wfc2, Formatting.Indented);
+                File.WriteAllText(filename, owajson);
             }
             catch(NullReferenceException)
             {
@@ -155,8 +225,7 @@ namespace WeadelClimaxd
         }
 
        
-        
-        private void FrmClima_KeyPress(object sender, KeyPressEventArgs e)
+            private void FrmClima_KeyPress(object sender, KeyPressEventArgs e)
         {
           
         }
@@ -195,7 +264,7 @@ namespace WeadelClimaxd
         {
 
             (new LayeredWindowHelper(this)).BackColor = Color.FromArgb(128, Win7Style.GetThemeColor());
-
+            getWeatherFromJson();
 
 
             Win7Style.EnableBlurBehindWindow(this.Handle);
