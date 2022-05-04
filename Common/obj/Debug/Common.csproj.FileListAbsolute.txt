@@ -1,0 +1,16 @@
+C:\Users\BitZ\Downloads\WeadelClimaxdd-main (1)\WeadelClimaxdd-main\Common\bin\Debug\Common.dll
+C:\Users\BitZ\Downloads\WeadelClimaxdd-main (1)\WeadelClimaxdd-main\Common\bin\Debug\Common.pdb
+C:\Users\BitZ\Downloads\WeadelClimaxdd-main (1)\WeadelClimaxdd-main\Common\obj\Debug\Common.csprojAssemblyReference.cache
+C:\Users\BitZ\Downloads\WeadelClimaxdd-main (1)\WeadelClimaxdd-main\Common\obj\Debug\Common.Properties.Resources.resources
+C:\Users\BitZ\Downloads\WeadelClimaxdd-main (1)\WeadelClimaxdd-main\Common\obj\Debug\Common.csproj.GenerateResource.cache
+C:\Users\BitZ\Downloads\WeadelClimaxdd-main (1)\WeadelClimaxdd-main\Common\obj\Debug\Common.csproj.CoreCompileInputs.cache
+C:\Users\BitZ\Downloads\WeadelClimaxdd-main (1)\WeadelClimaxdd-main\Common\obj\Debug\Common.dll
+C:\Users\BitZ\Downloads\WeadelClimaxdd-main (1)\WeadelClimaxdd-main\Common\obj\Debug\Common.pdb
+C:\Users\JADPA23\Desktop\WeadelClimaxdd-main\Common\bin\Debug\Common.dll
+C:\Users\JADPA23\Desktop\WeadelClimaxdd-main\Common\bin\Debug\Common.pdb
+C:\Users\JADPA23\Desktop\WeadelClimaxdd-main\Common\obj\Debug\Common.csproj.AssemblyReference.cache
+C:\Users\JADPA23\Desktop\WeadelClimaxdd-main\Common\obj\Debug\Common.Properties.Resources.resources
+C:\Users\JADPA23\Desktop\WeadelClimaxdd-main\Common\obj\Debug\Common.csproj.GenerateResource.cache
+C:\Users\JADPA23\Desktop\WeadelClimaxdd-main\Common\obj\Debug\Common.csproj.CoreCompileInputs.cache
+C:\Users\JADPA23\Desktop\WeadelClimaxdd-main\Common\obj\Debug\Common.dll
+C:\Users\JADPA23\Desktop\WeadelClimaxdd-main\Common\obj\Debug\Common.pdb
