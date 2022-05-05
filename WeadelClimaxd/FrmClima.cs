@@ -129,7 +129,7 @@ namespace WeadelClimaxd
             dt = Info.dt;
             WeatherMain.ForeCastInfo wJson = JsonConvert.DeserializeObject<WeatherMain.ForeCastInfo>(GetClimaJsonFromFile());
             InfoDetail mini;
-            for (int i = 0; i < wJson.hourly.Count; i++)
+            for (int i = 0; i < 2; i++)
             {
                 double tempxd;
                 int tempint;
