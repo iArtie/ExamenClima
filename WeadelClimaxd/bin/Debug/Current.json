@@ -1,0 +1,26 @@
+{
+  "coord": {
+    "lon": -86.0942,
+    "lat": 11.9744
+  },
+  "weather": [
+    {
+      "main": "Clouds",
+      "description": "overcast clouds",
+      "icon": "04n"
+    }
+  ],
+  "main": {
+    "temp": 297.96,
+    "pressure": 1011.0,
+    "humidity": 74.0
+  },
+  "wind": {
+    "speed": 3.39
+  },
+  "dt": 1651714875,
+  "sys": {
+    "sunrise": 1651663415,
+    "sunset": 1651708716
+  }
+}
